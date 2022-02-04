@@ -69,6 +69,21 @@ func DEBUGSkip(skip int, args ...interface{}) {
 	logdebug(skip+1, stringer, args...)
 }
 
+// PRETTY is similar to DEBUG, but it calls Pretty to format non-basic-type data.
+func PRETTY(args ...interface{}) {
+	stringer := Pretty
+	logdebug(1, stringer, args...)
+}
+
+// PRETTYSkip is similar to PRETTY, but it has an extra skip param to skip stacktrace
+// to get correct caller information.
+// When you wrap functions in this package, you always want to use the functions
+// which end with "Skip".
+func PRETTYSkip(skip int, args ...interface{}) {
+	stringer := Pretty
+	logdebug(skip+1, stringer, args...)
+}
+
 // SPEW is similar to DEBUG, but it calls spew.Sprintf to format non-basic-type data.
 func SPEW(args ...interface{}) {
 	stringer := func(v interface{}) string { return spew.Sprintf("%#v", v) }
